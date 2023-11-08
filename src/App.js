@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+// Square element
 function Square({ value, onSquareClick }) {
   return (
     <button className="square" onClick={onSquareClick}>
@@ -7,10 +7,10 @@ function Square({ value, onSquareClick }) {
     </button>
   );
 }
-
+// Board element
 function Board() {
   const [squares, setSquares] = useState(Array(9).fill(null));
-
+//function that writes "x" in selected squares
   function handleClick(i) {
     const newSquares = squares.slice();
     newSquares[i] = "x";
