@@ -9,12 +9,22 @@ function Square({ value, onSquareClick }) {
 }
 // Board element
 function Board() {
+  const [nextStep, setNextStep] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null));
-//function that writes "x" in selected squares
+  //function that writes "x" in selected squares
   function handleClick(i) {
-    const newSquares = squares.slice();
-    newSquares[i] = "x";
+   const newSquares = squares.slice();
+    // check to see if the square is filled
+    if (squares[i] ||winnerSelection(squares)) {
+      return;
+    }
+    if (nextStep) {
+      newSquares[i] = "x";
+    } else {
+      newSquares[i] = "o";
+    }
     setSquares(newSquares);
+    setNextStep(!nextStep);
   }
 
   return (
@@ -39,3 +49,23 @@ function Board() {
 }
 
 export default Board;
+// choose the winner of the game
+function winnerSelection (squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+}
